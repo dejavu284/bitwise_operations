@@ -132,6 +132,7 @@ if __name__ == '__main__':
     # print('f: ', bin(int(f))[2:], '\ns: ', bin(int(s))[2:])
 
     # divide_polynomial_on_polynomial(fromBin(f), fromBin(s))
+    
     first_test('10110', '101', '10')
     first_test('11010111', '10011', '11')
     first_test('10111', '11', '0')
