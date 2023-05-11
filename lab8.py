@@ -15,36 +15,42 @@ class Lab8(QtWidgets.QMainWindow):
     def init_ui(self):
         print('Done')
         
-        self.ui.custom_btn.clicked.connect(self.custom_test)
+        self.ui.custom_btn.clicked.connect(self.custom)
+        self.ui.test_btn.clicked.connect(self.tests)
 
-        # first_test('10', '0', '0')
+        # first_test('10', '0', '10')
         # first_test('10110', '101', '10')
         # first_test('11010111', '10011', '11')
         # first_test('10111', '11', '0')
-        # first_test('10', '11', '1')
+        # first_test('100', '111', '11')
         # first_test('1100100', '1011', '110')
         # first_test('1000111', '1011', '10')
 
 
-    # def Custom(self):
+    def tests(self):
+        if self.ui.radioButton_1.isChecked(): self.test_maket('10110', '101', '10')
+        if self.ui.radioButton_2.isChecked(): self.test_maket('11010111', '10011', '11')
+        if self.ui.radioButton_3.isChecked(): self.test_maket('10111', '11', '0')
+        if self.ui.radioButton_4.isChecked(): self.test_maket('100', '111', '11')
+        if self.ui.radioButton_5.isChecked(): self.test_maket('1100100', '1011', '110')
+        if self.ui.radioButton_6.isChecked(): self.test_maket('10', '0', '10')
 
-    #     self.custom_test()
+
+    def custom(self):
+        self.custom_test(self.ui.some_output_1, self.ui.some_output_2, self.ui.some_output_3, self.ui.some_output_4)
 
 
-    def custom_test(self):
-        f = self.ui.first_value_line.text()
-        s = self.ui.second_value_line.text()
-        # print('f: ', bin(int(f))[2:], '\ns: ', bin(int(s))[2:])
-        
-        f = self.fromBin(f)
-        s = self.fromBin(s)
+    def custom_test(self, first, second, third, forth, custom=True, f=None, s=None):
+        if custom: 
+            f = self.ui.first_value_line.text()
+            s = self.ui.second_value_line.text()
 
-        self.ui.some_output_1.setText(f'First value in decimal is: {f}\nSecond value in decimal is: {s}')
+        first.setText(f'First value is: {f}\nSecond value is: {s}')
         # self.ui.some_output_2.setText(f'Second value in decimal is: {s}')
 
-        result = self.divide_polynomial_on_polynomial(f, s)
-        self.ui.some_output_3.setText(f'Count of iteration is: {self.counter}')
-        self.ui.some_output_4.setText(f'Remainder of the division is: {result}')
+        result = self.divide_polynomial_on_polynomial(self.fromBin(f), self.fromBin(s))
+        third.setText(f'Count of iteration is: {self.counter}')
+        forth.setText(f'Remainder of the division is: {result}')
         strLine = 'divide_polynomial_on_polynomial:\n'
         for i in self.arrTemps:
             temp = self.arrTemps[i]
@@ -54,8 +60,9 @@ class Lab8(QtWidgets.QMainWindow):
             strLine += '-' * counterBit * 2 + '\n'
         # strLine += f'{self.arrTemps[str(len(self.arrTemps))][0]}\n'
         strLine += f'{result}\n'
-        self.ui.some_output_2.setText(strLine)
+        second.setText(strLine)
         print(self.arrTemps)
+        return result
 
 
     def BitConverter(self, value: int) -> int:
@@ -186,11 +193,9 @@ class Lab8(QtWidgets.QMainWindow):
 
 
     def test_maket(self, first_value: str, second_value: str, must_be_result: str):
-        # print(f"first value is: {first_value}\nsecond value is: {second_value}")
-        output = self.divide_polynomial_on_polynomial(self.fromBin(first_value), self.fromBin(second_value))
-        # print(f'must_be_result: {must_be_result}')
-        # print(f'output: {output}')
-        print(f"{must_be_result} == {output} is {must_be_result == str(output)} ")
+        output = self.custom_test(self.ui.some_output_5, self.ui.some_output_6, self.ui.some_output_7, self.ui.some_output_8, False, first_value, second_value)
+
+        self.ui.some_output_8.setText(f"{must_be_result} == {output} is {must_be_result == str(output)}")
 
 
 if __name__ == '__main__':
